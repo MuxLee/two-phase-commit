@@ -1,6 +1,6 @@
 package net.mux.twophasecommit.database.config;
 
-import com.zaxxer.hikari.HikariDataSource;
+import com.atomikos.jdbc.AtomikosDataSourceBean;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,9 @@ import javax.sql.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles(value = "database")
+@ActiveProfiles(value = "xa-database")
 @SpringBootTest
-class DatabaseConfigurationTest {
+class XADatabaseConfigurationTest {
 
     @Autowired
     private AppProperties appProperties;
@@ -22,8 +22,7 @@ class DatabaseConfigurationTest {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @DisplayName(value = "동적 DataSource Bean 생성 테스트")
-    @SuppressWarnings(value = "resource")
+    @DisplayName(value = "동적 분산 DataSource Bean 생성 테스트")
     @Test
     void testDynamicDataSourceBeanRegistration() {
         final var databases = this.appProperties.getDatabases();
@@ -32,9 +31,10 @@ class DatabaseConfigurationTest {
         assertEquals(databases.size(), dataSourceMap.size(), "생성된 DataSource Bean 없습니다.");
         assertAll(() -> dataSourceMap.values()
                 .forEach(dataSource ->
-                        assertInstanceOf(HikariDataSource.class, dataSource, "생성된 Bean이 HikariDataSource 인스턴스 타입이 아닙니다.")
+                        assertInstanceOf(AtomikosDataSourceBean.class, dataSource, "생성된 Bean이 AtomikosDataSourceBean 인스턴스 타입이 아닙니다.")
                 )
         );
+
     }
 
 }

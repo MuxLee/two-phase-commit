@@ -11,8 +11,11 @@ class AppProperties {
 
     private final Set<DataSourceProperties> databases;
 
+    private boolean xaEnabled;
+
     private AppProperties() {
         this.databases = new LinkedHashSet<>();
+        this.xaEnabled = false;
     }
 
     @NonNull
@@ -20,8 +23,17 @@ class AppProperties {
         return Collections.unmodifiableSet(this.databases);
     }
 
+    @NonNull
+    public boolean isXaEnabled() {
+        return this.xaEnabled;
+    }
+
     public void setDatabases(@NonNull final Set<DataSourceProperties> databases) {
         this.databases.addAll(databases);
+    }
+
+    public void setXaEnabled(@NonNull final boolean xaEnabled) {
+        this.xaEnabled = xaEnabled;
     }
 
 }

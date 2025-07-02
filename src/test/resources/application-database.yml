@@ -1,0 +1,14 @@
+app:
+  databases:
+    - driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.mysql.cj.jdbc.MysqlXADataSource
+      name: two-phase-commit-mysql-1
+      url: jdbc:mysql://127.0.0.1:13306
+      username: root
+      password: 1234
+    - driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.mysql.cj.jdbc.MysqlXADataSource
+      name: two-phase-commit-mysql-2
+      url: jdbc:mysql://127.0.0.1:13307
+      password: 1234
+      username: root

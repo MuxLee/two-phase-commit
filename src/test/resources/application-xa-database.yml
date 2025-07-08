@@ -13,7 +13,3 @@ app:
       password: 1234
       username: root
   xa-enabled: true
-
-spring:
-  application:
-    name: two-phase-commit

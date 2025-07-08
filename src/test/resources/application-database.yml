@@ -12,8 +12,4 @@ app:
       url: jdbc:mysql://127.0.0.1:13307
       password: 1234
       username: root
-  xa-enabled: true
-
-spring:
-  application:
-    name: two-phase-commit
+  xa-enabled: false

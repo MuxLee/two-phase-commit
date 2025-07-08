@@ -1,15 +1,19 @@
 app:
   databases:
     - driver-class-name: com.mysql.cj.jdbc.Driver
-      type: com.mysql.cj.jdbc.MysqlXADataSource
       name: two-phase-commit-mysql-1
-      url: jdbc:mysql://127.0.0.1:13306
+      scanning-packages:
+        - net.mux.twophasecommit.store
+      type: com.mysql.cj.jdbc.MysqlXADataSource
+      url: jdbc:mysql://127.0.0.1:13306/store
       username: root
       password: 1234
     - driver-class-name: com.mysql.cj.jdbc.Driver
-      type: com.mysql.cj.jdbc.MysqlXADataSource
       name: two-phase-commit-mysql-2
-      url: jdbc:mysql://127.0.0.1:13307
+      scanning-packages:
+        - net.mux.twophasecommit.record
+      type: com.mysql.cj.jdbc.MysqlXADataSource
+      url: jdbc:mysql://127.0.0.1:13307/record
       password: 1234
       username: root
   xa-enabled: true

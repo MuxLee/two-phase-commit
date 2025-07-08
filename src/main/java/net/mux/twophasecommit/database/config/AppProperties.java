@@ -1,15 +1,16 @@
 package net.mux.twophasecommit.database.config;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.lang.NonNull;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @ConfigurationProperties(value = "app")
 class AppProperties {
 
-    private final Set<DataSourceProperties> databases;
+    private final Set<JpaDataSourceProperties> databases;
 
     private boolean xaEnabled;
 
@@ -19,7 +20,7 @@ class AppProperties {
     }
 
     @NonNull
-    public Set<DataSourceProperties> getDatabases() {
+    public Set<JpaDataSourceProperties> getDatabases() {
         return Collections.unmodifiableSet(this.databases);
     }
 
@@ -28,7 +29,7 @@ class AppProperties {
         return this.xaEnabled;
     }
 
-    public void setDatabases(@NonNull final Set<DataSourceProperties> databases) {
+    public void setDatabases(@NonNull final Set<JpaDataSourceProperties> databases) {
         this.databases.addAll(databases);
     }
 

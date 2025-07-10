@@ -3,13 +3,14 @@ package net.mux.twophasecommit.record.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "sale_history")
-public final class SaleHistory {
+public class SaleHistory {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
@@ -35,9 +36,26 @@ public final class SaleHistory {
     )
     private LocalDateTime saleDateTime;
 
-    public SaleHistory(final String itemName, final long price) {
+    public SaleHistory(@NonNull final String itemName, final long price) {
         this.itemName = itemName;
         this.price = price;
+    }
+
+    protected SaleHistory() {}
+
+    @NonNull
+    public LocalDateTime getSaleDateTime() {
+        return this.saleDateTime;
+    }
+
+    @NonNull
+    public long getPrice() {
+        return this.price;
+    }
+
+    @NonNull
+    public String getItemName() {
+        return this.itemName;
     }
 
 }

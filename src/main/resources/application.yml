@@ -21,3 +21,6 @@ app:
 spring:
   application:
     name: two-phase-commit
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

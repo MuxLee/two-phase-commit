@@ -18,7 +18,7 @@ public abstract class DatabasePersistTestStrategy extends DatabaseTestStrategy {
             this.testPersist(applicationContext, entityManager);
             transaction.commit();
         }
-        catch (Exception exception) {
+        catch (final Exception exception) {
             transaction.rollback();
 
             throw new RuntimeException(exception);

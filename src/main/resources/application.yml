@@ -1,26 +1,24 @@
 app:
-  databases:
-    - driver-class-name: com.mysql.cj.jdbc.Driver
-      name: two-phase-commit-mysql-1
-      scanning-packages:
-        - net.mux.twophasecommit.store
-      type: com.mysql.cj.jdbc.MysqlXADataSource
-      url: jdbc:mysql://127.0.0.1:13306/store
-      username: root
-      password: 1234
-    - driver-class-name: com.mysql.cj.jdbc.Driver
-      name: two-phase-commit-mysql-2
-      scanning-packages:
-        - net.mux.twophasecommit.record
-      type: com.mysql.cj.jdbc.MysqlXADataSource
-      url: jdbc:mysql://127.0.0.1:13307/record
-      password: 1234
-      username: root
+  primary:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: two-phase-commit-mysql-1
+    scanning-packages:
+      - net.mux.twophasecommit.store
+    type: com.mysql.cj.jdbc.MysqlXADataSource
+    url: jdbc:mysql://127.0.0.1:13306/store
+    username: root
+    password: 1234
+  secondary:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: two-phase-commit-mysql-2
+    scanning-packages:
+      - net.mux.twophasecommit.record
+    type: com.mysql.cj.jdbc.MysqlXADataSource
+    url: jdbc:mysql://127.0.0.1:13307/record
+    password: 1234
+    username: root
   xa-enabled: true
 
 spring:
   application:
     name: two-phase-commit
-  jpa:
-    hibernate:
-      ddl-auto: create-drop

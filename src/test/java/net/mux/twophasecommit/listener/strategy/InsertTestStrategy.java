@@ -29,12 +29,12 @@ public final class InsertTestStrategy<T> extends DatabasePersistTestStrategy {
         }
     }
 
-    public static <T> TestStrategy of(@NonNull final Set<T> queries) {
+    public static <T> InsertTestStrategy<T> of(@NonNull final Set<T> queries) {
         return new InsertTestStrategy<>(queries);
     }
 
     @SafeVarargs
-    public static <T> TestStrategy of(@NonNull final T... entities) {
+    public static <T> InsertTestStrategy<T> of(@NonNull final T... entities) {
         return of(Set.of(entities));
     }
 

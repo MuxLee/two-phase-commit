@@ -19,8 +19,7 @@ public abstract class BeforeTestMethodListener extends AbstractTestExecutionList
     }
 
     @Override
-    @SuppressWarnings(value = "all")
-    public void beforeTestMethod(@NonNull final TestContext testContext) throws Exception {
+    public void beforeTestMethod(@NonNull final TestContext testContext) {
         this.testStrategy.test(testContext);
     }
 

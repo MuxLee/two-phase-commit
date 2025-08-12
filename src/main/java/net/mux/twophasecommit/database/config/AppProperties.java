@@ -8,20 +8,26 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @ConfigurationProperties(value = "app")
-class AppProperties {
+public class AppProperties {
 
-    private final Set<JpaDataSourceProperties> databases;
+    private JpaDataSourceProperties primary;
+
+    private JpaDataSourceProperties secondary;
 
     private boolean xaEnabled;
 
     private AppProperties() {
-        this.databases = new LinkedHashSet<>();
         this.xaEnabled = false;
     }
 
     @NonNull
-    public Set<JpaDataSourceProperties> getDatabases() {
-        return Collections.unmodifiableSet(this.databases);
+    public JpaDataSourceProperties getSecondary() {
+        return this.secondary;
+    }
+
+    @NonNull
+    public JpaDataSourceProperties getPrimary() {
+        return this.primary;
     }
 
     @NonNull
@@ -29,12 +35,16 @@ class AppProperties {
         return this.xaEnabled;
     }
 
-    public void setDatabases(@NonNull final Set<JpaDataSourceProperties> databases) {
-        this.databases.addAll(databases);
-    }
-
     public void setXaEnabled(@NonNull final boolean xaEnabled) {
         this.xaEnabled = xaEnabled;
+    }
+
+    public void setPrimary(@NonNull final JpaDataSourceProperties primary) {
+        this.primary = primary;
+    }
+
+    public void setSecondary(@NonNull final JpaDataSourceProperties secondary) {
+        this.secondary = secondary;
     }
 
 }

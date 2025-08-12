@@ -6,13 +6,9 @@ import org.springframework.lang.NonNull;
 
 public final class TruncateTestStrategy extends DatabasePersistTestStrategy {
 
-    private String tableName;
+    private final String tableName;
 
     public TruncateTestStrategy(@NonNull final String tableName) {
-        this.tableName = tableName;
-    }
-
-    public void setTableName(@NonNull final String tableName) {
         this.tableName = tableName;
     }
 
@@ -21,16 +17,21 @@ public final class TruncateTestStrategy extends DatabasePersistTestStrategy {
             @NonNull final ApplicationContext applicationContext,
             @NonNull final EntityManager entityManager
     ) {
+        if (this.tableName == null) {
+            throw new IllegalArgumentException("'tableName' must not be null.");
+        }
+
         if (this.tableName.isBlank()) {
-            throw new IllegalArgumentException("초기화할 테이블 정보가 입력되지 않았습니다.");
+            throw new IllegalArgumentException("'tableName' must not be blank.");
         }
 
         final var sql = "TRUNCATE TABLE " + this.tableName;
+
         entityManager.createNativeQuery(sql)
                 .executeUpdate();
     }
 
-    public static TestStrategy of(@NonNull final String tableName) {
+    public static TruncateTestStrategy of(@NonNull final String tableName) {
         return new TruncateTestStrategy(tableName);
     }
 

@@ -4,6 +4,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.test.context.TestContext;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public final class SeveralTestStrategy implements TestStrategy {
@@ -11,7 +12,7 @@ public final class SeveralTestStrategy implements TestStrategy {
     private final Set<TestStrategy> testStrategies;
 
     public SeveralTestStrategy() {
-        this.testStrategies = new HashSet<>(0);
+        this.testStrategies = new LinkedHashSet<>(0);
     }
 
     public void registerTestStrategy(@NonNull final TestStrategy testStrategy) {

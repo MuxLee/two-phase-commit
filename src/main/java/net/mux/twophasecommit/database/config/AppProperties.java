@@ -1,6 +1,7 @@
 package net.mux.twophasecommit.database.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.lang.NonNull;
 
 import java.util.Collections;
@@ -10,8 +11,10 @@ import java.util.Set;
 @ConfigurationProperties(value = "app")
 public class AppProperties {
 
+    @NestedConfigurationProperty
     private JpaDataSourceProperties primary;
 
+    @NestedConfigurationProperty
     private JpaDataSourceProperties secondary;
 
     private boolean xaEnabled;

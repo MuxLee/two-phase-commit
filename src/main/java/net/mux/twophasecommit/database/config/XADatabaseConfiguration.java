@@ -1,44 +1,22 @@
 package net.mux.twophasecommit.database.config;
 
-import com.atomikos.jdbc.AtomikosDataSourceBean;
-import com.mysql.cj.jdbc.MysqlXADataSource;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
+import org.hibernate.engine.transaction.jta.platform.internal.AtomikosJtaPlatform;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
+import java.util.Properties;
 
-@Configuration
-@ConditionalOnProperty(
-    havingValue = "true",
-    value = "app.xa-enabled"
-)
-class XADatabaseConfiguration extends AbstractDatabaseConfiguration {
+class XADatabaseConfiguration {
 
-    @Override
-    protected DataSource createDataSource(
-            @NonNull final String dataSourceBeanName,
-            @NonNull final DataSourceProperties dataSourceProperties
-    ) {
-        try {
-            final var dataSourceBean = new AtomikosDataSourceBean();
-            final var mysqlXaDataSource = new MysqlXADataSource();
+    Properties jpaProperties() {
+        final var jpaProperties = new Properties();
+        final var jtaPlatformName = AtomikosJtaPlatform.class.getName();
 
-            mysqlXaDataSource.setPassword(dataSourceProperties.getPassword());
-            mysqlXaDataSource.setPinGlobalTxToPhysicalConnection(true);
-            mysqlXaDataSource.setUrl(dataSourceProperties.getUrl());
-            mysqlXaDataSource.setUser(dataSourceProperties.getUsername());
+        jpaProperties.setProperty("hibernate.format_sql", "true");
+        jpaProperties.setProperty("hibernate.show_sql", "true");
+        jpaProperties.put("hibernate.transaction.coordinator_class", "jta");
+        jpaProperties.put("hibernate.transaction.jta.platform", jtaPlatformName);
+        jpaProperties.put("jakarta.persistence.transactionType", "JTA");
 
-            dataSourceBean.setUniqueResourceName(dataSourceBeanName);
-            dataSourceBean.setXaDataSource(mysqlXaDataSource);
-
-            return dataSourceBean;
-        }
-        catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
+        return jpaProperties;
     }
 
 }

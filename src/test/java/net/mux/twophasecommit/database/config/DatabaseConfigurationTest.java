@@ -17,19 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class DatabaseConfigurationTest {
 
     @Autowired
-    private AppProperties appProperties;
-
-    @Autowired
     private ApplicationContext applicationContext;
 
     @DisplayName(value = "동적 DataSource Bean 생성 테스트")
     @SuppressWarnings(value = "resource")
     @Test
     void testDynamicDataSourceBeanRegistration() {
-        final var databases = this.appProperties.getDatabases();
         final var dataSourceMap = this.applicationContext.getBeansOfType(DataSource.class);
 
-        assertEquals(databases.size(), dataSourceMap.size(), "생성된 DataSource Bean 없습니다.");
+        assertEquals(2, dataSourceMap.size(), "생성된 DataSource Bean 없습니다.");
         assertAll(() -> dataSourceMap.values()
                 .forEach(dataSource ->
                         assertInstanceOf(HikariDataSource.class, dataSource, "생성된 Bean이 HikariDataSource 인스턴스 타입이 아닙니다.")

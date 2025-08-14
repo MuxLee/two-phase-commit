@@ -1,26 +1,36 @@
 package net.mux.twophasecommit.database.config;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.lang.NonNull;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @ConfigurationProperties(value = "app")
-class AppProperties {
+public class AppProperties {
 
-    private final Set<DataSourceProperties> databases;
+    @NestedConfigurationProperty
+    private JpaDataSourceProperties primary;
+
+    @NestedConfigurationProperty
+    private JpaDataSourceProperties secondary;
 
     private boolean xaEnabled;
 
     private AppProperties() {
-        this.databases = new LinkedHashSet<>();
         this.xaEnabled = false;
     }
 
     @NonNull
-    public Set<DataSourceProperties> getDatabases() {
-        return Collections.unmodifiableSet(this.databases);
+    public JpaDataSourceProperties getSecondary() {
+        return this.secondary;
+    }
+
+    @NonNull
+    public JpaDataSourceProperties getPrimary() {
+        return this.primary;
     }
 
     @NonNull
@@ -28,12 +38,16 @@ class AppProperties {
         return this.xaEnabled;
     }
 
-    public void setDatabases(@NonNull final Set<DataSourceProperties> databases) {
-        this.databases.addAll(databases);
-    }
-
     public void setXaEnabled(@NonNull final boolean xaEnabled) {
         this.xaEnabled = xaEnabled;
+    }
+
+    public void setPrimary(@NonNull final JpaDataSourceProperties primary) {
+        this.primary = primary;
+    }
+
+    public void setSecondary(@NonNull final JpaDataSourceProperties secondary) {
+        this.secondary = secondary;
     }
 
 }

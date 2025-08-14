@@ -3,7 +3,7 @@ package net.mux.twophasecommit.database.config;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.lang.NonNull;
 
-class JpaDataSourceProperties extends DataSourceProperties {
+public class JpaDataSourceProperties extends DataSourceProperties {
 
     private String[] scanningPackages;
 

@@ -8,12 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.lang.NonNull;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Properties;
 
 @Configuration
 @ConditionalOnProperty(
@@ -24,7 +22,7 @@ import java.util.Properties;
         basePackages = "net.mux.twophasecommit.record",
         entityManagerFactoryRef = "secondaryEntityManagerFactoryBean"
 )
-class SecondaryXADatabaseConfiguration {
+class SecondaryXADatabaseConfiguration extends XADatabaseConfiguration {
 
     private final JpaDataSourceProperties secondaryProperties;
 
@@ -56,18 +54,12 @@ class SecondaryXADatabaseConfiguration {
     ) {
         final var entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         final var jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        final var jpaProperties = new Properties();
+        final var jpaProperties = this.jpaProperties();
 
-        jpaProperties.setProperty("hibernate.show_sql", "true");
-        jpaProperties.setProperty(
-                "hibernate.transaction.manager_lookup_class",
-                "com.atomikos.icatch.jta.hibernate3.TransactionManagerLookup"
-        );
         entityManagerFactoryBean.setDataSource(secondaryDataSource);
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactoryBean.setPackagesToScan(this.secondaryProperties.getScanningPackages());
-        jpaVendorAdapter.setDatabase(Database.MYSQL);
         jpaVendorAdapter.setGenerateDdl(true);
 
         return entityManagerFactoryBean;

@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
 @Configuration
@@ -14,7 +13,6 @@ import org.springframework.transaction.jta.JtaTransactionManager;
         havingValue = "true",
         value = "app.xa-enabled"
 )
-@EnableTransactionManagement
 class XATransactionConfiguration {
 
     @Bean
@@ -29,13 +27,12 @@ class XATransactionConfiguration {
 
     @Bean
     @NonNull
-    JtaTransactionManager transactionManager(
-            @NonNull final UserTransactionManager userTransactionManager
-    ) {
+    JtaTransactionManager transactionManager(@NonNull final UserTransactionManager userTransactionManager) {
         final var jtaTransactionManager = new JtaTransactionManager();
 
         jtaTransactionManager.setTransactionManager(userTransactionManager);
         jtaTransactionManager.setUserTransaction(userTransactionManager);
+        jtaTransactionManager.setAllowCustomIsolationLevels(true);
 
         return jtaTransactionManager;
     }

@@ -4,14 +4,13 @@ import org.hibernate.engine.transaction.jta.platform.internal.AtomikosJtaPlatfor
 
 import java.util.Properties;
 
-class XADatabaseConfiguration {
+class XADatabaseConfiguration extends DatabaseConfiguration {
 
+    @Override
     Properties jpaProperties() {
-        final var jpaProperties = new Properties();
+        final var jpaProperties = super.jpaProperties();
         final var jtaPlatformName = AtomikosJtaPlatform.class.getName();
 
-        jpaProperties.setProperty("hibernate.format_sql", "true");
-        jpaProperties.setProperty("hibernate.show_sql", "true");
         jpaProperties.put("hibernate.transaction.coordinator_class", "jta");
         jpaProperties.put("hibernate.transaction.jta.platform", jtaPlatformName);
         jpaProperties.put("jakarta.persistence.transactionType", "JTA");

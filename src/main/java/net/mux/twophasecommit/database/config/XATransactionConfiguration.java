@@ -5,7 +5,6 @@ import jakarta.transaction.SystemException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
 @Configuration
@@ -26,8 +25,7 @@ class XATransactionConfiguration {
     }
 
     @Bean
-    @NonNull
-    JtaTransactionManager transactionManager(@NonNull final UserTransactionManager userTransactionManager) {
+    JtaTransactionManager transactionManager(final UserTransactionManager userTransactionManager) {
         final var jtaTransactionManager = new JtaTransactionManager();
 
         jtaTransactionManager.setTransactionManager(userTransactionManager);

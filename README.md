@@ -6,7 +6,7 @@
 |---------------|--------|----------|
 | [Java]        | 21.0.6 | Open JDK |
 | [Spring Boot] | 3.5.3  |          |
- | [MySQL]       | 9.3.0  |          |
+| [MySQL]       | 9.3.0  |          |
 
 ## 설정
 ### Java
@@ -55,23 +55,23 @@ docker pull mysql
 위의 단계를 통해 받은 [MySQL] 이미지로 [Docker] 컨테이너를 생성하기 위해 `compose.yml` 또는 `docker-compose.yml` 파일을 구성합니다.
 ```yaml
 services:
-  two-phase-commit-mysql-1:
-    container_name: two-phase-commit-mysql-1
+  two-phase-commit-bank:
+    container_name: two-phase-commit-bank
     image: ${DOCKER_IMAGE}
     volumes:
-      - ${VOLUME_HOME}/two-phase-commit-mysql-1/data:${MYSQL_DATA_DIR}
-      - ${VOLUME_HOME}/two-phase-commit-mysql-1/conf.d:${MYSQL_CONF_DIR}
+      - ${VOLUME_HOME}/two-phase-commit-bank/data:${MYSQL_DATA_DIR}
+      - ${VOLUME_HOME}/two-phase-commit-bank/conf.d:${MYSQL_CONF_DIR}
     ports:
       - '13306:3306'
     environment:
       MYSQL_DATABASE: ${MYSQL_DEFAULT_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  two-phase-commit-mysql-2:
-    container_name: two-phase-commit-mysql-2
+  two-phase-commit-store:
+    container_name: two-phase-commit-store
     image: ${DOCKER_IMAGE}
     volumes:
-      - ${VOLUME_HOME}/two-phase-commit-mysql-2/data:${MYSQL_DATA_DIR}
-      - ${VOLUME_HOME}/two-phase-commit-mysql-2/conf.d:${MYSQL_CONF_DIR}
+      - ${VOLUME_HOME}/two-phase-commit-store/data:${MYSQL_DATA_DIR}
+      - ${VOLUME_HOME}/two-phase-commit-store/conf.d:${MYSQL_CONF_DIR}
     ports:
       - '13307:3306'
     environment:
@@ -85,7 +85,6 @@ services:
 DOCKER_IMAGE=mysql:latest
 MYSQL_CONF_DIR=/etc/mysql/conf.d
 MYSQL_DATA_DIR=/var/lib/mysql
-MYSQL_DEFAULT_DATABASE=store
 MYSQL_ROOT_PASSWORD={MySQL 초기 구성 시, 설정할 root 계정 비밀번호}
 VOLUME_HOME={Docker volume과 연결할 폴더의 경로를 작성}
 ```

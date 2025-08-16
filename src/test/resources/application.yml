@@ -1,3 +1,19 @@
+app:
+  bank:
+    name: two-phase-commit-bank
+    scanning-packages:
+      - net.mux.twophasecommit.bank
+    url: jdbc:mysql://127.0.0.1:13306/bank
+    password: 1234
+    username: root
+  store:
+    name: two-phase-commit-store
+    scanning-packages:
+      - net.mux.twophasecommit.store
+    url: jdbc:mysql://127.0.0.1:13307/store
+    username: root
+    password: 1234
+
 logging:
   level:
     com:

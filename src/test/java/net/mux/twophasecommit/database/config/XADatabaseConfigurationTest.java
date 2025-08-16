@@ -12,14 +12,15 @@ import javax.sql.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles(value = "xa-database")
+@ActiveProfiles(value = "xa")
+@DisplayName(value = "[분산 트랜잭션] - 데이터베이스 연동")
 @SpringBootTest
 class XADatabaseConfigurationTest {
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    @DisplayName(value = "동적 분산 DataSource Bean 생성 테스트")
+    @DisplayName(value = "DataSource Bean 타입 및 개수 테스트")
     @Test
     void testDynamicDataSourceBeanRegistration() {
         final var dataSourceMap = this.applicationContext.getBeansOfType(DataSource.class);

@@ -4,18 +4,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.lang.NonNull;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @ConfigurationProperties(value = "app")
 public class AppProperties {
 
     @NestedConfigurationProperty
-    private JpaDataSourceProperties primary;
+    private JpaDataSourceProperties bank;
 
     @NestedConfigurationProperty
-    private JpaDataSourceProperties secondary;
+    private JpaDataSourceProperties store;
 
     private boolean xaEnabled;
 
@@ -24,13 +20,13 @@ public class AppProperties {
     }
 
     @NonNull
-    public JpaDataSourceProperties getSecondary() {
-        return this.secondary;
+    public JpaDataSourceProperties getStore() {
+        return this.store;
     }
 
     @NonNull
-    public JpaDataSourceProperties getPrimary() {
-        return this.primary;
+    public JpaDataSourceProperties getBank() {
+        return this.bank;
     }
 
     @NonNull
@@ -42,12 +38,12 @@ public class AppProperties {
         this.xaEnabled = xaEnabled;
     }
 
-    public void setPrimary(@NonNull final JpaDataSourceProperties primary) {
-        this.primary = primary;
+    public void setBank(@NonNull final JpaDataSourceProperties bank) {
+        this.bank = bank;
     }
 
-    public void setSecondary(@NonNull final JpaDataSourceProperties secondary) {
-        this.secondary = secondary;
+    public void setStore(@NonNull final JpaDataSourceProperties store) {
+        this.store = store;
     }
 
 }

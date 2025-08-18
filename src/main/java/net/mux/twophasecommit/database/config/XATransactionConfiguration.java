@@ -3,7 +3,6 @@ package net.mux.twophasecommit.database.config;
 import com.atomikos.icatch.jta.UserTransactionManager;
 import jakarta.transaction.SystemException;
 import net.mux.twophasecommit.shared.conditional.ExtendsTransactionCondition;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.jta.JtaTransactionManager;

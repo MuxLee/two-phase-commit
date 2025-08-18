@@ -18,6 +18,7 @@ abstract class AbstractTradeService implements TradeService {
     }
 
     @Override
+    @SuppressWarnings(value = "all")
     public void trade(final String itemName, final int price) {
         this.bankService.leavePassHistory(price);
         this.storeService.leaveSaleHistory(null, price);

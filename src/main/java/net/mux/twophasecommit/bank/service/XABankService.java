@@ -1,6 +1,6 @@
 package net.mux.twophasecommit.bank.service;
 
-import net.mux.twophasecommit.bank.repository.BankRepository;
+import net.mux.twophasecommit.bank.repository.PassHistoryRepository;
 import net.mux.twophasecommit.shared.conditional.ExtendsTransactionCondition;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +19,22 @@ class XABankService extends AbstractBankService {
 
     /**
      * {@link XABankService} 클래스의 생성자입니다.
-     * {@link BankRepository}를 주입받아 객체를 생성하여 반환합니다.
+     * {@link PassHistoryRepository}를 주입받아 객체를 생성하여 반환합니다.
      *
      * <ul>
      * <li>{@code bankRepository}는 <code>null</code>일 수 없습니다.</li>
      * </ul>
      *
-     * @param bankRepository 거래 이력 저장소
+     * @param passHistoryRepository 거래 이력 저장소
      */
-    XABankService(final BankRepository bankRepository) {
-        super(bankRepository);
+    XABankService(final PassHistoryRepository passHistoryRepository) {
+        super(passHistoryRepository);
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @param price 거래 금액
      */
     @Override
     @Transactional

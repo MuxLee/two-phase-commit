@@ -29,7 +29,7 @@ public class PassHistory {
      * 발생한 거래 이력의 고유 번호(값)입니다.
      *
      * <ul>
-     * <li>{@link PassHistory} 엔티티의 기본키입니다.</li>
+     *     <li>{@link PassHistory} 엔티티의 기본키입니다.</li>
      * </ul>
      *
      * @see UUID
@@ -42,8 +42,9 @@ public class PassHistory {
      * 거래 이후의 최종 금액입니다.
      *
      * <ul>
-     * <li>{@code null} 데이터를 넣을 수 없습니다.
-     * <li>변경이 불가능합니다.
+     *     <li>{@code null} 데이터를 넣을 수 없습니다.</li>
+     *     <li>변경이 불가능합니다.</li>
+     * </ul>
      */
     @Column(
             nullable = false,
@@ -55,8 +56,8 @@ public class PassHistory {
      * 거래 이전의 기존 금액입니다.
      *
      * <ul>
-     * <li>{@code null} 데이터를 넣을 수 없습니다.</li>
-     * <li>변경이 불가능합니다.</li>
+     *     <li>{@code null} 데이터를 넣을 수 없습니다.</li>
+     *     <li>변경이 불가능합니다.</li>
      * </ul>
      */
     @Column(
@@ -69,8 +70,8 @@ public class PassHistory {
      * 발생한 거래의 입금된 금액입니다.
      *
      * <ul>
-     * <li>{@code null} 데이터를 넣을 수 없습니다.</li>
-     * <li>변경이 불가능합니다.</li>
+     *     <li>{@code null} 데이터를 넣을 수 없습니다.</li>
+     *     <li>변경이 불가능합니다.</li>
      * </ul>
      */
     @Column(

@@ -1,6 +1,7 @@
 package net.mux.twophasecommit.bank.service;
 
 import net.mux.twophasecommit.bank.entity.PassHistory;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public interface BankService {
      *
      * @return 모든 거래 이력
      */
+    @NonNull
     List<PassHistory> getPassHistories();
 
     /**

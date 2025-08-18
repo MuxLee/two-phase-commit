@@ -14,6 +14,17 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+/**
+ * 거래 이력을 저장할 데이터베이스 정보를 설정합니다.
+ *
+ * <p>데이터베이스와의 연결과, 실제 테이블과 매칭되는 엔티티들을 관리할
+ * 엔티티 매니저를 설정합니다.</p>
+ *
+ * <p>XA가 활성화되었을 때 설정됩니다.</p>
+ *
+ * @see AppProperties
+ * @see ExtendsTransactionCondition
+ */
 @Configuration
 @EnableJpaRepositories(
         basePackages = Banks.PACKAGE,
@@ -22,12 +33,27 @@ import java.sql.SQLException;
 @ExtendsTransactionCondition(havingValue = "true")
 class BankXADatabaseConfiguration extends XADatabaseConfiguration {
 
-    private final JpaDataSourceProperties bankProperties;
+    /**
+     * 거래 이력을 저장하는 데이터베이스 정보
+     *
+     * @see AppProperties#bank
+     */
+    private final ExtendsDataSourceProperties bankProperties;
 
+    /**
+     * {@link BankDatabaseConfiguration}의 생성자입니다.
+     *
+     * @param appProperties 데이터베이스 연동 정보
+     */
     BankXADatabaseConfiguration(final AppProperties appProperties) {
         this.bankProperties = appProperties.getBank();
     }
 
+    /**
+     * 데이터베이스 연동 정보를 담은 {@code Bean}을 생성합니다.
+     *
+     * @return 데이터베이스 연동 정보
+     */
     @Bean(value = Banks.DATA_SOURCE)
     DataSource dataSource() throws SQLException {
         final var dataSourceBean = new AtomikosDataSourceBean();
@@ -44,6 +70,13 @@ class BankXADatabaseConfiguration extends XADatabaseConfiguration {
         return dataSourceBean;
     }
 
+    /**
+     * 실제 데이터베이스의 테이블과 매칭되는 엔티티들을
+     * 관리하는 {@code Bean}을 생성합니다.
+     *
+     * @param dataSource 데이터베이스 연동 정보
+     * @return 엔티티 매니저
+     */
     @Bean(value = Banks.ENTITY_MANAGER_FACTORY_BEAN)
     LocalContainerEntityManagerFactoryBean entityManagerFactory(
             @Qualifier(value = Banks.DATA_SOURCE) final DataSource dataSource

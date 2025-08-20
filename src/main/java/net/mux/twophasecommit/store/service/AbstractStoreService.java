@@ -36,6 +36,8 @@ abstract class AbstractStoreService implements StoreService {
 
     /**
      * {@inheritDoc}
+     *
+     * @return 모든 판매 기록
      */
     @NonNull
     @Override

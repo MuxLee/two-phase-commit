@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PassHistoryRepositoryTest {
 
     @Autowired
-    private BankRepository storeAmountRepository;
+    private PassHistoryRepository storeAmountRepository;
 
     @DisplayName(value = "상점 금액 전체 조회 테스트")
     @Test
